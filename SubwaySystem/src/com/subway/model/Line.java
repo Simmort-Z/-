@@ -1,11 +1,10 @@
 package com.subway.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Line {
-    private String name;
-    private List<Station> stations;
+    private final String name;
+    private final List<Station> stations;
 
     public Line(String name) {
         this.name = name;
@@ -13,11 +12,13 @@ public class Line {
     }
 
     public void addStation(Station station) {
-        stations.add(station);
-        station.addLine(this.name);
+        if (!stations.contains(station)) {
+            stations.add(station);
+            station.addLine(this.name);
+        }
     }
 
-    // Getter方法
+    // Getters
     public String getName() { return name; }
-    public List<Station> getStations() { return stations; }
+    public List<Station> getStations() { return Collections.unmodifiableList(stations); }
 }

@@ -1,14 +1,11 @@
 package com.subway.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Station {
-    private String name;
-    private Set<String> lines;
-    private Map<Station, Double> adjacentStations; // 相邻站点及距离
+    private final String name;
+    private final Set<String> lines;
+    private final Map<Station, Double> adjacentStations;
 
     public Station(String name) {
         this.name = name;
@@ -24,16 +21,18 @@ public class Station {
         adjacentStations.put(station, distance);
     }
 
-    // Getter方法
+    // Getters
     public String getName() { return name; }
-    public Set<String> getLines() { return lines; }
-    public Map<Station, Double> getAdjacentStations() { return adjacentStations; }
+    public Set<String> getLines() { return Collections.unmodifiableSet(lines); }
+    public Map<Station, Double> getAdjacentStations() { 
+        return Collections.unmodifiableMap(adjacentStations); 
+    }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Station station = (Station) obj;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Station station = (Station) o;
         return name.equals(station.name);
     }
 
